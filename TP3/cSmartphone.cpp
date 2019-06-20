@@ -5,7 +5,7 @@
 #include <ctime>
 #include "cSmartphone.h"
 
-
+using namespace std;
 
 void cSmartphone::SetRingtone()
 {
@@ -193,29 +193,43 @@ void cSmartphone::Usar_Aplicacion()
 		system("cls");
 		return;
 	}
-	int j = 0;
+	string a;
+	int j=0;
 	while (j != cantidad_de_aplicaciones + 1)
 	{
-		cout << "Elija la aplicacion que quiere usar:" << endl;
-		for (int i = 0; i < cantidad_de_aplicaciones; i++)
-			cout << i + 1 << ")" << aplicaciones[i] << endl;
-		cout << cantidad_de_aplicaciones + 1 << ")Salir" << endl;
-		cin >> j;
-		system("cls");
-		for (int i = 0; i < N; i++)
+		try
 		{
-			if (j >= 1 && j <= cantidad_de_aplicaciones + 1)
+			cout << "Elija la aplicacion que quiere usar:" << endl;
+			for (int i = 0; i < cantidad_de_aplicaciones; i++)
+				cout << i + 1 << ")" << aplicaciones[i] << endl;
+			cout << cantidad_de_aplicaciones + 1 << ")Salir" << endl;
+			cin >> a;
+			j = stoi(a);
+			system("cls");
+			if (j == NULL)
+				throw exception();
+			for (int i = 0; i < N; i++)
 			{
-				if (j != cantidad_de_aplicaciones + 1)
+				if (j >= 1 && j <= cantidad_de_aplicaciones + 1)
 				{
-					if (j == i + 1)
+					if (j != cantidad_de_aplicaciones + 1)
 					{
-						cout << "Usando: " << aplicaciones[i] << endl;
-						system("pause");
-						system("cls");
+						if (j == i + 1)
+						{
+							cout << "Usando: " << aplicaciones[i] << endl;
+							system("pause");
+							system("cls");
+						}
 					}
 				}
 			}
+		}
+		catch (...)
+		{
+			system("cls");
+			cout << "Hubo un error" << endl;
+			system("pause");
+			system("cls");
 		}
 	}
 	system("cls");
@@ -223,34 +237,44 @@ void cSmartphone::Usar_Aplicacion()
 
 void cSmartphone::Eliminar_Aplicacion()
 {
+
+	string b;
 	int a;
-	if (cantidad_de_aplicaciones == 0)
+	try
 	{
-		cout << "No hay aplicaciones" << endl;
-		system("pause");
+		if (cantidad_de_aplicaciones == 0)
+		{
+			cout << "No hay aplicaciones" << endl;
+			system("pause");
+			system("cls");
+			return;
+		}
+		cout << "Que aplicacion quieres eliminar?" << endl;
+		for (int i = 0; i < cantidad_de_aplicaciones; i++)
+			cout << i + 1 << ")" << aplicaciones[i] << endl;
+		cout << cantidad_de_aplicaciones + 1 << ")Salir" << endl;
+		cin >> b;
+		a = stoi(b);
 		system("cls");
-		return;
+		if (a < 1 || a >= cantidad_de_aplicaciones + 1)
+		{
+			throw exception();
+
+		}
+		if (a >= 1 || a < cantidad_de_aplicaciones + 1)
+		{
+			for (int i = a - 1; i < cantidad_de_aplicaciones - 1; i++)
+				aplicaciones[i] = aplicaciones[i + 1];
+			cantidad_de_aplicaciones--;
+		}
 	}
-	cout << "Que aplicacion quieres eliminar?" << endl;
-	for (int i = 0; i < cantidad_de_aplicaciones; i++)
-		cout << i + 1 << ")" << aplicaciones[i] << endl;
-	cout << cantidad_de_aplicaciones + 1 << ")Salir" << endl;
-	cin >> a;
-	if (a == cantidad_de_aplicaciones + 1)
+	catch (...)
 	{
 		system("cls");
-		return;
-	}
-	if (a < 1 || a > cantidad_de_aplicaciones + 1)
-	{
 		cout << "Hubo un error" << endl;
 		system("pause");
 		system("cls");
-		return;
 	}
-	for (int i = a - 1; i < cantidad_de_aplicaciones - 1; i++)
-		aplicaciones[i] = aplicaciones[i + 1];
-	cantidad_de_aplicaciones--;
 	system("cls");
 }
 
